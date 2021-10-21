@@ -1,16 +1,13 @@
-import './App.css';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Typography } from '@mui/material';
 import theme from './theme';
+import Routes from 'core/configs/Routes';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App">
-        <Typography>Test</Typography>
-      </div>
+      <Routes />
     </ThemeProvider>
   );
 }
