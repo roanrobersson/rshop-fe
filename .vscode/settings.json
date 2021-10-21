@@ -1,9 +1,13 @@
 {
-    "files.exclude": {
-        "node_modules": true,
-        ".vscode": true,
-        ".gitignore": true,
-        "public": true
-    },
-    "editor.tabSize": 2
+  "files.exclude": {
+    "node_modules": true,
+    ".vscode": true,
+    ".gitignore": true,
+    "public": true
+  },
+  "files.eol": "\n",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.tabSize": 2
 }
