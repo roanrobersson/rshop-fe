@@ -4,6 +4,7 @@
     ".vscode": true,
     ".gitignore": true,
     "public": true
+	"build": true
   },
   "files.eol": "\n",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
