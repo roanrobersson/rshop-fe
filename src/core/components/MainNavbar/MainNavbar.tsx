@@ -8,6 +8,7 @@ import useIsMobile from 'core/hooks/useIsMobile';
 import MainNavbarLogo from './MainNavbarLogo';
 import { BadgeIconButton } from 'core/components';
 import { StyledLink, LinksWrapper, ButtonsWrapper } from './styled';
+import { HOME } from 'core/configs/routeKeys';
 
 const MainNavbar = () => {
   const isMobile = useIsMobile();
@@ -27,35 +28,34 @@ const MainNavbar = () => {
             <StyledLink href='#' children='Maquiagem' />
           </LinksWrapper>
 
-          <MainNavbarLogo href={'#'} isMobile={isMobile} />
+          <MainNavbarLogo href={HOME} isMobile={isMobile} />
 
           <ButtonsWrapper>
             <IconButton
               component={Link}
               href='#'
-              size='large'
               color='inherit'
               sx={{ flexShrink: 0, mr: { xs: 1, lg: 2 } }}
             >
-              <SearchIcon fontSize='large' />
+              <SearchIcon />
             </IconButton>
 
             <Button size='large' onClick={() => {}} color='inherit' sx={{ flexShrink: 0, mr: 2 }}>
-              <AccountCircle fontSize='large' sx={{ mr: 1 }} />
+              <AccountCircle sx={{ mr: 1 }} />
               Entre ou cadastre-se
             </Button>
 
-            <BadgeIconButton size='large' sx={{ mr: 2 }} value={150} onClick={() => {}} href={'#'}>
+            <BadgeIconButton sx={{ mr: 2 }} value={150} onClick={() => {}} href={'#'}>
               <FavoriteIcon />
             </BadgeIconButton>
 
-            <BadgeIconButton size='large' sx={{ mr: 2 }} onClick={() => {}} value={150}>
+            <BadgeIconButton sx={{ mr: 2 }} onClick={() => {}} value={150}>
               <ShoppingCartIcon />
             </BadgeIconButton>
           </ButtonsWrapper>
 
           <Box sx={{ display: { xs: 'flex', lg: 'none' } }}>
-            <IconButton color='inherit' onClick={() => {}} size='large'>
+            <IconButton color='inherit' onClick={() => {}}>
               <MoreIcon />
             </IconButton>
           </Box>

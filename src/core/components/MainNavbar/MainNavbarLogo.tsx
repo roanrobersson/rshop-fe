@@ -10,10 +10,10 @@ type MainNavbarLogoProps = {
 const MainNavbarLogo = ({ href, isMobile }: MainNavbarLogoProps) => {
   return (
     <>
-      {!isMobile ? (
-        <ImageLink href={href} src={logo} alt='logo' width={177} height={78} />
-      ) : (
+      {isMobile ? (
         <ImageLink href={href} src={logoMobile} alt='logo' width={177} height={28} />
+      ) : (
+        <ImageLink href={href} src={logo} alt='logo' width={177} height={78} />
       )}
     </>
   );
