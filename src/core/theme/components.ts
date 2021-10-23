@@ -26,6 +26,14 @@ const components = {
       fontSize: 'large' as 'large',
     },
   },
+
+  MuiAppBar: {
+    styleOverrides: {
+      root: {
+        boxShadow: 'none',
+      },
+    },
+  },
 };
 
 export default components;
