@@ -11,8 +11,8 @@ type ImageProps = {
 
 const StyledImg = styled('img')<ImageProps>(unstable_styleFunctionSx as any);
 
-const Image = ({ src, alt, width, height, sx }: ImageProps) => {
-  return <StyledImg src={src} alt={alt} width={width} height={height} sx={sx} />;
-};
+const Image = ({ src, alt, width, height, sx }: ImageProps) => (
+  <StyledImg src={src} alt={alt} width={width} height={height} sx={sx} />
+);
 
 export default Image;

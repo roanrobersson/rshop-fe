@@ -20,22 +20,20 @@ const BadgeIconButton = ({
   size,
   sx,
   value,
-}: BadgeIconButtonTypes) => {
-  return (
-    <IconButton
-      component={Link}
-      disabled={disabled}
-      href={href}
-      size={size}
-      color='inherit'
-      sx={{ flexShrink: 0, ...sx }}
-      onClick={onClick}
-    >
-      <Badge badgeContent={value} color='error' max={99}>
-        {cloneElement(children, { fontSize: size })}
-      </Badge>
-    </IconButton>
-  );
-};
+}: BadgeIconButtonTypes) => (
+  <IconButton
+    component={Link}
+    disabled={disabled}
+    href={href}
+    size={size}
+    color='inherit'
+    sx={{ flexShrink: 0, ...sx }}
+    onClick={onClick}
+  >
+    <Badge badgeContent={value} color='error' max={99}>
+      {cloneElement(children, { fontSize: size })}
+    </Badge>
+  </IconButton>
+);
 
 export default BadgeIconButton;

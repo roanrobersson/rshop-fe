@@ -8,20 +8,18 @@ type LinkProps = {
   href: string;
 };
 
-const Link = ({ children, external = false, href }: LinkProps) => {
-  return (
-    <>
-      {external ? (
-        <MuiLink href={href} color='inherit'>
-          {children}
-        </MuiLink>
-      ) : (
-        <ReactRouterLink to={href} color='inherit'>
-          {children}
-        </ReactRouterLink>
-      )}
-    </>
-  );
-};
+const Link = ({ children, external = false, href }: LinkProps) => (
+  <>
+    {external ? (
+      <MuiLink href={href} color='inherit'>
+        {children}
+      </MuiLink>
+    ) : (
+      <ReactRouterLink to={href} color='inherit'>
+        {children}
+      </ReactRouterLink>
+    )}
+  </>
+);
 
 export default Link;

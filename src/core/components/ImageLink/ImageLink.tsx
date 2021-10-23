@@ -9,12 +9,10 @@ type ImageLinkProps = {
   external?: boolean;
 };
 
-const ImageLink = ({ href, src, alt, width, height, external = false }: ImageLinkProps) => {
-  return (
-    <Link external={external} href={href}>
-      <Image src={src} alt={alt} width={width} height={height} />
-    </Link>
-  );
-};
+const ImageLink = ({ href, src, alt, width, height, external = false }: ImageLinkProps) => (
+  <Link external={external} href={href}>
+    <Image src={src} alt={alt} width={width} height={height} />
+  </Link>
+);
 
 export default ImageLink;
