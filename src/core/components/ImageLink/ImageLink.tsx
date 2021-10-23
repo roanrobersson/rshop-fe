@@ -1,5 +1,4 @@
-import { Link } from '@mui/material';
-import { Image } from 'core/components';
+import { Image, Link } from 'core/components';
 
 type ImageLinkProps = {
   href: string;
@@ -7,11 +6,12 @@ type ImageLinkProps = {
   alt: string;
   width: number;
   height: number;
+  external?: boolean;
 };
 
-const ImageLink = ({ href, src, alt, width, height }: ImageLinkProps) => {
+const ImageLink = ({ href, src, alt, width, height, external = false }: ImageLinkProps) => {
   return (
-    <Link href={href} underline='none' color='inherit'>
+    <Link external={external} href={href}>
       <Image src={src} alt={alt} width={width} height={height} />
     </Link>
   );
