@@ -3,12 +3,12 @@
     "node_modules": true,
     ".vscode": true,
     ".gitignore": true,
-    "public": true
-	"build": true
+    "public": true,
+    "build": true
   },
   "files.eol": "\n",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
 }

@@ -8,7 +8,6 @@ import useIsMobile from 'core/hooks/useIsMobile';
 import MainNavbarLogo from './MainNavbarLogo';
 import { BadgeIconButton } from 'core/components';
 import { StyledLink, LinksWrapper, ButtonsWrapper } from './styled';
-import { HOME } from 'core/configs/routeKeys';
 
 const MainNavbar = () => {
   const isMobile = useIsMobile();
@@ -28,7 +27,7 @@ const MainNavbar = () => {
             <StyledLink href='#' children='Maquiagem' />
           </LinksWrapper>
 
-          <MainNavbarLogo href={HOME} isMobile={isMobile} />
+          <MainNavbarLogo href={'/'} isMobile={isMobile} />
 
           <ButtonsWrapper>
             <IconButton

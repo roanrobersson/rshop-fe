@@ -6,8 +6,8 @@ type MainNavbarLogoProps = {
   isMobile: boolean;
 };
 
-const AdminNavbarLogo = ({ href, isMobile }: MainNavbarLogoProps) => (
+const MainNavbarLogo = ({ href, isMobile }: MainNavbarLogoProps) => (
   <ImageLink href={href} src={logoMobile} alt='logo' width={177} height={28} />
 );
 
-export default AdminNavbarLogo;
+export default MainNavbarLogo;

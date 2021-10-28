@@ -1,13 +1,13 @@
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './core/theme/theme';
-import Routes from 'core/configs/Routes';
+import Router from 'core/configs/Router';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Routes />
+      <Router />
     </ThemeProvider>
   );
 }
