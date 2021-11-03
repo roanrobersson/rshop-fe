@@ -8,9 +8,17 @@ import useIsMobile from 'core/hooks/useIsMobile';
 import MainNavbarLogo from './MainNavbarLogo';
 import { BadgeIconButton } from 'core/components';
 import { StyledLink, LinksWrapper, ButtonsWrapper } from './styled';
+import useAuth from 'modules/auth/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
-const MainNavbar = () => {
+const MainNavbar = (): JSX.Element => {
   const isMobile = useIsMobile();
+  const { authenticated, currentUser } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate('/entrar');
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -39,10 +47,22 @@ const MainNavbar = () => {
               <SearchIcon />
             </IconButton>
 
-            <Button size='large' onClick={() => {}} color='inherit' sx={{ flexShrink: 0, mr: 2 }}>
-              <AccountCircle sx={{ mr: 1 }} />
-              Entre ou cadastre-se
-            </Button>
+            {authenticated ? (
+              <Button size='large' onClick={() => {}} color='inherit' sx={{ flexShrink: 0, mr: 2 }}>
+                <AccountCircle sx={{ mr: 1 }} />
+                {currentUser?.firstName}
+              </Button>
+            ) : (
+              <Button
+                size='large'
+                onClick={handleLoginClick}
+                color='inherit'
+                sx={{ flexShrink: 0, mr: 2 }}
+              >
+                <AccountCircle sx={{ mr: 1 }} />
+                Entre ou cadastre-se
+              </Button>
+            )}
 
             <BadgeIconButton sx={{ mr: 2 }} value={150} onClick={() => {}} href={'#'}>
               <FavoriteIcon />

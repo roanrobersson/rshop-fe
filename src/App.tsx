@@ -3,13 +3,13 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from './core/theme/theme';
 import Router from 'core/configs/Router';
 
-function App() {
+const App = (): JSX.Element => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router />
     </ThemeProvider>
   );
-}
+};
 
 export default App;

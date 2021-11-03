@@ -2,9 +2,11 @@ import { AppBar, Toolbar, Box, Button } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import useIsMobile from 'core/hooks/useIsMobile';
 import MainNavbarLogo from './MainNavbarLogo';
+import useAuth from 'modules/auth/hooks/useAuth';
 
-const AdminNavbar = () => {
+const AdminNavbar = (): JSX.Element => {
   const isMobile = useIsMobile();
+  const { authenticated, currentUser } = useAuth();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -14,10 +16,17 @@ const AdminNavbar = () => {
         >
           <MainNavbarLogo href={'/admin'} isMobile={isMobile} />
 
-          <Button size='large' onClick={() => {}} color='inherit'>
-            <AccountCircle sx={{ mr: 1 }} />
-            Entre ou cadastre-se
-          </Button>
+          {authenticated ? (
+            <Button size='large' onClick={() => {}} color='inherit'>
+              <AccountCircle sx={{ mr: 1 }} />
+              {currentUser?.firstName}
+            </Button>
+          ) : (
+            <Button size='large' onClick={() => {}} color='inherit'>
+              <AccountCircle sx={{ mr: 1 }} />
+              Entre ou cadastre-se
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

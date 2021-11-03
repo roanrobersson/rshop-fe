@@ -1,4 +1,4 @@
-const User = () => {
+const User = (): JSX.Element => {
   return <>User Page</>;
 };
 

@@ -15,6 +15,19 @@ const components = {
     },
   },
 
+  MuiButton: {
+    styleOverrides: {
+      contained: {
+        fontSize: 16,
+        fontWeight: 700,
+      },
+      outlined: {
+        fontSize: 16,
+        fontWeight: 700,
+      },
+    },
+  },
+
   MuiIconButton: {
     defaultProps: {
       size: 'large' as 'large',
@@ -31,6 +44,20 @@ const components = {
     styleOverrides: {
       root: {
         boxShadow: 'none',
+      },
+    },
+  },
+
+  MuiCard: {
+    defaultProps: {
+      elevation: 10,
+    },
+  },
+
+  MuiPaper: {
+    styleOverrides: {
+      rounded: {
+        borderRadius: 20,
       },
     },
   },

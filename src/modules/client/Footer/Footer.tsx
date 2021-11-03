@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Typography, IconButton, Link, Container, Divider } from '@mui/material';
 import { Image } from 'core/components';
 import logo from 'core/assets/images/logo_white.webp';
@@ -5,7 +6,7 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { INSTAGRAM_URL, WHATSAPP_URL } from 'core/configs/env';
 
-const Footer = () => (
+const Footer = (): JSX.Element => (
   <Box
     sx={{
       backgroundColor: (theme) => theme.palette.grey[300],

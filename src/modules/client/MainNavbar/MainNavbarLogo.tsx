@@ -7,7 +7,7 @@ type MainNavbarLogoProps = {
   isMobile: boolean;
 };
 
-const MainNavbarLogo = ({ href, isMobile }: MainNavbarLogoProps) => (
+const MainNavbarLogo = ({ href, isMobile }: MainNavbarLogoProps): JSX.Element => (
   <>
     {isMobile ? (
       <ImageLink href={href} src={logoMobile} alt='logo' width={177} height={28} />

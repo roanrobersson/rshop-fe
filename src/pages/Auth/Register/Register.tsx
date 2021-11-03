@@ -1,4 +1,4 @@
-const Register = () => {
+const Register = (): JSX.Element => {
   return <>Register Page</>;
 };
 

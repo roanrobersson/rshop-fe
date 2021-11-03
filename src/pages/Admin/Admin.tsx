@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-const Admin = () => {
+const Admin = (): JSX.Element => {
   return (
     <>
       <Outlet />

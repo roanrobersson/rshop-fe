@@ -20,7 +20,7 @@ const BadgeIconButton = ({
   size,
   sx,
   value,
-}: BadgeIconButtonTypes) => (
+}: BadgeIconButtonTypes): JSX.Element => (
   <IconButton
     component={Link}
     disabled={disabled}

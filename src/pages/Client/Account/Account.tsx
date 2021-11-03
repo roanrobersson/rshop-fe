@@ -1,4 +1,4 @@
-const Account = () => {
+const Account = (): JSX.Element => {
   return <>Account page</>;
 };
 

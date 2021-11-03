@@ -9,7 +9,14 @@ type ImageLinkProps = {
   external?: boolean;
 };
 
-const ImageLink = ({ href, src, alt, width, height, external = false }: ImageLinkProps) => (
+const ImageLink = ({
+  href,
+  src,
+  alt,
+  width,
+  height,
+  external = false,
+}: ImageLinkProps): JSX.Element => (
   <Link external={external} href={href}>
     <Image src={src} alt={alt} width={width} height={height} />
   </Link>
