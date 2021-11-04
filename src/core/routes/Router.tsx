@@ -3,6 +3,7 @@ import ClientMainNavbar from 'modules/client/MainNavbar';
 import AdminMainNavbar from 'modules/admin/MainNavbar';
 import ClientFooter from 'modules/client/Footer';
 import AuthProvider from 'modules/auth/providers/AuthProvider';
+import RequireAuth from './RequireAuth';
 import {
   Client,
   Admin,
@@ -20,6 +21,7 @@ import {
   Login,
   Auth,
 } from 'pages';
+import Unauthorized from 'pages/Unauthorized';
 
 const Navbar = (): JSX.Element => {
   return (
@@ -50,15 +52,36 @@ const Router = (): JSX.Element => {
             <Route path={'pesquisa'} element={<ClientSearch />} />
             <Route path={'produtos'} element={<ClientProduct />} />
             <Route path={'checkout'} element={<ClientCheckout />} />
-            <Route path={'conta'} element={<ClientAccount />} />
+            <Route
+              path={'conta'}
+              element={
+                <RequireAuth allowedRoles={['ROLE_CLIENT']}>
+                  <ClientAccount />
+                </RequireAuth>
+              }
+            />
           </Route>
 
           <Route path={'admin'} element={<Navigate to={'dashboard'} />} />
-          <Route path={'admin'} element={<Admin />}>
+          <Route
+            path={'admin'}
+            element={
+              <RequireAuth allowedRoles={['ROLE_OPERATOR']}>
+                <Admin />
+              </RequireAuth>
+            }
+          >
             <Route path={'dashboard'} element={<AdminDashboard />} />
             <Route path={'produtos'} element={<AdminProduct />} />
             <Route path={'categorias'} element={<AdminCategory />} />
-            <Route path={'usuarios'} element={<AdminUser />} />
+            <Route
+              path={'usuarios'}
+              element={
+                <RequireAuth allowedRoles={['ROLE_ADMIN']}>
+                  <AdminUser />
+                </RequireAuth>
+              }
+            />
           </Route>
 
           <Route path={'/'} element={<Auth />}>
@@ -66,6 +89,7 @@ const Router = (): JSX.Element => {
             <Route path={'cadastrar'} element={<Register />} />
           </Route>
 
+          <Route path={'nao-autorizado'} element={<Unauthorized />} />
           <Route path={'404'} element={<NotFound />} />
           <Route path={'*'} element={<Navigate to={'404'} />} />
         </Routes>

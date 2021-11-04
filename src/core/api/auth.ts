@@ -1,5 +1,6 @@
 import jwtDecode from 'jwt-decode';
-import { SessionData, AccessToken, Role } from './types';
+import { SessionData, AccessToken } from './types';
+import { Role } from 'core/lib/types';
 
 export const saveSessionData = (sessionData: SessionData): void => {
   localStorage.setItem('authData', JSON.stringify(sessionData));
@@ -25,6 +26,13 @@ export const getAccessTokenDecoded = (): AccessToken | null => {
   }
 };
 
+export const getAllowedRoles = (): Role[] => {
+  const accessTokenDecoded: AccessToken | null = getAccessTokenDecoded();
+  if (accessTokenDecoded === null) return [];
+  const { authorities = [] } = accessTokenDecoded;
+  return authorities;
+};
+
 export const isTokenValid = (): boolean => {
   const accessTokenDecoded: AccessToken | null = getAccessTokenDecoded();
   if (accessTokenDecoded === null) return false;
@@ -35,11 +43,7 @@ export const isAuthenticated = (): boolean => {
   return isTokenValid();
 };
 
-export const isAllowedByRole = (routeRoles: Role[] = []): boolean => {
-  if (routeRoles.length === 0) return true;
-  const accessTokenDecoded: AccessToken | null = getAccessTokenDecoded();
-  if (accessTokenDecoded === null) return false;
-
-  const { authorities } = accessTokenDecoded;
-  return routeRoles.some((role) => authorities?.includes(role));
+export const isAllowedByRoles = (roles: Role[] = []): boolean => {
+  const allowedRoles: Role[] = getAllowedRoles();
+  return roles.some((role) => allowedRoles.includes(role));
 };

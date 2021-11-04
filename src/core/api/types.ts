@@ -1,4 +1,4 @@
-export type Role = 'ROLE_CLIENT' | 'ROLE_OPERATOR' | 'ROLE_ADMIN';
+import { Role } from 'core/lib/types';
 
 export type LoginData = {
   username: string;

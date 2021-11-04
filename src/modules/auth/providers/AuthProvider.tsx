@@ -1,45 +1,54 @@
 import { useState, useEffect } from 'react';
 import { createContext } from 'react';
 import { login } from 'core/api/services/userService';
-import { getSessionData, isAuthenticated, saveSessionData } from 'core/api/auth';
-import { useNavigate } from 'react-router-dom';
+import {
+  getAllowedRoles,
+  getSessionData,
+  isAuthenticated,
+  saveSessionData,
+  isAllowedByRoles,
+} from 'core/api/auth';
 import { CurrentUser } from '../types';
-
-export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+import { Role } from 'core/lib/types';
 
 type AuthContextData = {
-  makeLogin: (userName: string, password: string) => void;
-  loading: boolean;
-  makeLogout: () => void;
-  currentUser: CurrentUser | null;
   authenticated: boolean;
+  currentUser: CurrentUser | null;
+  isAllowedByRoles: (roles?: Role[]) => boolean;
+  loading: boolean;
+  makeLogin: (userName: string, password: string) => void;
+  makeLogout: () => void;
+  roles: Role[];
 };
 
 type AuthProviderProps = {
   children: React.ReactNode;
 };
 
-const normalizeCurrentUserData = (data: any): CurrentUser => {
+const extranctAndNormalizeCurrentUser = (data: any): CurrentUser | null => {
+  if (!data) return null;
   const { userId, userFirstName, userLastName } = data;
   return { id: userId, firstName: userFirstName, lastName: userLastName };
 };
 
+export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+
 const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
-  const [authenticated, setAuthenticated] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const [authenticated, setAuthenticated] = useState<boolean>(isAuthenticated());
+  const [roles, setRoles] = useState<Role[]>(getAllowedRoles());
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(
+    extranctAndNormalizeCurrentUser(getSessionData())
+  );
 
   useEffect(() => {
-    if (isAuthenticated()) {
-      const sessionData = getSessionData();
-      setCurrentUser(normalizeCurrentUserData(sessionData));
+    if (currentUser) {
       setAuthenticated(true);
+      setRoles(getAllowedRoles());
+    } else {
+      setAuthenticated(false);
+      setRoles([]);
     }
-  }, []);
-
-  useEffect(() => {
-    setAuthenticated(currentUser ? true : false);
   }, [currentUser]);
 
   const makeLogin = (userName: string, password: string): void => {
@@ -49,8 +58,7 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
       .then((response) => {
         try {
           saveSessionData(response.data);
-          setCurrentUser(normalizeCurrentUserData(response.data));
-          navigate('/');
+          setCurrentUser(extranctAndNormalizeCurrentUser(response.data));
         } catch (error) {
           Promise.reject(error);
         }
@@ -67,7 +75,17 @@ const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   };
 
   return (
-    <AuthContext.Provider value={{ makeLogin, loading, makeLogout, currentUser, authenticated }}>
+    <AuthContext.Provider
+      value={{
+        makeLogin,
+        loading,
+        makeLogout,
+        currentUser,
+        authenticated,
+        roles,
+        isAllowedByRoles,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
