@@ -1,3 +1,4 @@
+import { useState, MouseEvent } from 'react';
 import { IconButton, AppBar, Toolbar, Box, Button, Link } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
@@ -10,77 +11,103 @@ import { BadgeIconButton } from 'core/components';
 import { StyledLink, LinksWrapper, ButtonsWrapper } from './styled';
 import useAuth from 'modules/auth/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import UserMenu from '../user/UserMenu';
 
 const MainNavbar = (): JSX.Element => {
   const isMobile = useIsMobile();
   const { authenticated, currentUser } = useAuth();
   const navigate = useNavigate();
+  const [userMenuAnchorEl, setUserMenuAnchorEl] = useState<HTMLElement | null>(null);
+  const [userMenuIsOpen, setUserMenuIsOpen] = useState<boolean>(false);
 
-  const handleLoginClick = () => {
+  const handleLoginClick = (ev: MouseEvent<HTMLElement>) => {
     navigate('/entrar');
   };
 
+  const handleAccountClick = (ev: MouseEvent<HTMLElement>) => {
+    setUserMenuAnchorEl(ev.currentTarget);
+    setUserMenuIsOpen(true);
+  };
+
+  const handleUserMenuClose = () => {
+    setUserMenuIsOpen(false);
+  };
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar sx={{ position: 'static', boxShadow: 'none' }}>
-        <Toolbar
-          sx={{ minHeight: { md: 120 }, px: { md: 1, lg: 8 }, justifyContent: 'space-between' }}
-        >
-          <LinksWrapper color='inherit'>
-            <StyledLink href='#' children='Lançamentos' />
-            <StyledLink href='#' children='Sobrancelhas' />
-            <StyledLink href='#' children='Cílios' />
-            <StyledLink href='#' children='Higienização' />
-            <StyledLink href='#' children='Cérum' />
-            <StyledLink href='#' children='Maquiagem' />
-          </LinksWrapper>
+    <>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar sx={{ position: 'static', boxShadow: 'none' }}>
+          <Toolbar
+            sx={{ minHeight: { md: 120 }, px: { md: 1, lg: 8 }, justifyContent: 'space-between' }}
+          >
+            <LinksWrapper color='inherit'>
+              <StyledLink href='#' children='Lançamentos' />
+              <StyledLink href='#' children='Sobrancelhas' />
+              <StyledLink href='#' children='Cílios' />
+              <StyledLink href='#' children='Higienização' />
+              <StyledLink href='#' children='Cérum' />
+              <StyledLink href='#' children='Maquiagem' />
+            </LinksWrapper>
 
-          <MainNavbarLogo href={'/'} isMobile={isMobile} />
+            <MainNavbarLogo href={'/'} isMobile={isMobile} />
 
-          <ButtonsWrapper>
-            <IconButton
-              component={Link}
-              href='#'
-              color='inherit'
-              sx={{ flexShrink: 0, mr: { xs: 1, lg: 2 } }}
-            >
-              <SearchIcon />
-            </IconButton>
-
-            {authenticated ? (
-              <Button size='large' onClick={() => {}} color='inherit' sx={{ flexShrink: 0, mr: 2 }}>
-                <AccountCircle sx={{ mr: 1 }} />
-                {currentUser?.firstName}
-              </Button>
-            ) : (
-              <Button
-                size='large'
-                onClick={handleLoginClick}
+            <ButtonsWrapper>
+              <IconButton
+                component={Link}
+                href='#'
                 color='inherit'
-                sx={{ flexShrink: 0, mr: 2 }}
+                sx={{ flexShrink: 0, mr: { xs: 1, lg: 2 } }}
               >
-                <AccountCircle sx={{ mr: 1 }} />
-                Entre ou cadastre-se
-              </Button>
-            )}
+                <SearchIcon />
+              </IconButton>
 
-            <BadgeIconButton sx={{ mr: 2 }} value={150} onClick={() => {}} href={'#'}>
-              <FavoriteIcon />
-            </BadgeIconButton>
+              {authenticated ? (
+                <Button
+                  size='large'
+                  onClick={handleAccountClick}
+                  color='inherit'
+                  sx={{ flexShrink: 0, mr: 2 }}
+                >
+                  <AccountCircle sx={{ mr: 1 }} />
+                  {currentUser?.firstName}
+                </Button>
+              ) : (
+                <Button
+                  size='large'
+                  onClick={handleLoginClick}
+                  color='inherit'
+                  sx={{ flexShrink: 0, mr: 2 }}
+                >
+                  <AccountCircle sx={{ mr: 1 }} />
+                  Entre ou cadastre-se
+                </Button>
+              )}
 
-            <BadgeIconButton sx={{ mr: 2 }} onClick={() => {}} value={150}>
-              <ShoppingCartIcon />
-            </BadgeIconButton>
-          </ButtonsWrapper>
+              <BadgeIconButton sx={{ mr: 2 }} value={150} onClick={() => {}} href={'#'}>
+                <FavoriteIcon />
+              </BadgeIconButton>
 
-          <Box sx={{ display: { xs: 'flex', lg: 'none' } }}>
-            <IconButton color='inherit' onClick={() => {}}>
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </Box>
+              <BadgeIconButton sx={{ mr: 2 }} onClick={() => {}} value={150}>
+                <ShoppingCartIcon />
+              </BadgeIconButton>
+            </ButtonsWrapper>
+
+            <Box sx={{ display: { xs: 'flex', lg: 'none' } }}>
+              <IconButton color='inherit' onClick={() => {}}>
+                <MoreIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </Box>
+
+      <UserMenu
+        anchorEl={userMenuAnchorEl}
+        isOpen={userMenuIsOpen}
+        onClick={handleUserMenuClose}
+        onClose={handleUserMenuClose}
+      />
+    </>
   );
 };
 

@@ -61,6 +61,14 @@ const components = {
       },
     },
   },
+
+  MuiMenu: {
+    styleOverrides: {
+      paper: {
+        borderRadius: '4px !important',
+      },
+    },
+  },
 };
 
 export default components;
