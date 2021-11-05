@@ -10,18 +10,19 @@ import MainNavbarLogo from './MainNavbarLogo';
 import { BadgeIconButton } from 'core/components';
 import { StyledLink, LinksWrapper, ButtonsWrapper } from './styled';
 import useAuth from 'modules/auth/hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import UserMenu from '../user/UserMenu';
 
 const MainNavbar = (): JSX.Element => {
   const isMobile = useIsMobile();
   const { authenticated, currentUser } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [userMenuAnchorEl, setUserMenuAnchorEl] = useState<HTMLElement | null>(null);
   const [userMenuIsOpen, setUserMenuIsOpen] = useState<boolean>(false);
 
   const handleLoginClick = (ev: MouseEvent<HTMLElement>) => {
-    navigate('/entrar');
+    navigate('/entrar', { state: { from: location } });
   };
 
   const handleAccountClick = (ev: MouseEvent<HTMLElement>) => {

@@ -3,7 +3,7 @@ import { Menu, MenuItem, Divider, Avatar, ListItemIcon } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useAuth from 'modules/auth/hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 type UserMenuProps = {
   anchorEl?: Element | ((element: Element) => Element) | null | undefined;
@@ -22,6 +22,7 @@ const UserMenu = ({
 }: UserMenuProps) => {
   const { makeLogout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleMenuClick: MouseEventHandler<HTMLDivElement> = (
     ev: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
@@ -66,7 +67,7 @@ const UserMenu = ({
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={() => navigate('conta')}>
+        <MenuItem onClick={() => navigate('conta', { state: { from: location } })}>
           <Avatar /> Minha conta
         </MenuItem>
 

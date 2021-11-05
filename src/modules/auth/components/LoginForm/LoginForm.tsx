@@ -3,6 +3,8 @@ import { Link, PasswordInput, EmailInput } from 'core/components';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useForm } from 'react-hook-form';
 import useAuth from 'modules/auth/hooks/useAuth';
+import { loginEmailRules, loginPasswordRules } from 'core/lib/inputValidations';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 type FormData = {
   email: string;
@@ -11,6 +13,10 @@ type FormData = {
 
 const LoginForm = (): JSX.Element => {
   const { makeLogin, loading } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state as { from: Location };
+  let from = state ? state.from.pathname : '/';
 
   const defaultFormValues: FormData = { email: '', password: '' };
   const { handleSubmit, control } = useForm<FormData>({
@@ -20,6 +26,7 @@ const LoginForm = (): JSX.Element => {
 
   const onSubmit = (data: FormData) => {
     makeLogin(data.email, data.password);
+    navigate(from, { replace: true });
   };
 
   return (
@@ -31,13 +38,24 @@ const LoginForm = (): JSX.Element => {
 
         <EmailInput
           control={control}
-          name='email'
+          disabled={loading}
           fullWidth
           label='Email'
+          name='email'
+          placeholder={'exemplo@gmail.com'}
+          rules={loginEmailRules}
           sx={{ display: 'block', mb: 2 }}
         />
 
-        <PasswordInput control={control} name='password' fullWidth label='Senha' sx={{ mb: 2 }} />
+        <PasswordInput
+          control={control}
+          disabled={loading}
+          fullWidth
+          label='Senha'
+          name='password'
+          rules={loginPasswordRules}
+          sx={{ mb: 2 }}
+        />
 
         <Button sx={{ mb: 16 }}>Esqueci a senha</Button>
 
