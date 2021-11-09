@@ -8,6 +8,7 @@ import { LoginFormData } from 'modules/common/auth/types';
 type LoginFormProps = {
   control: Control<LoginFormData>;
   isLoading: boolean;
+  loginError: string | null;
   onRecoveryButtonClick: () => void;
   onSubmit: () => void;
 };
@@ -15,6 +16,7 @@ type LoginFormProps = {
 const LoginForm = ({
   control,
   isLoading,
+  loginError,
   onRecoveryButtonClick,
   onSubmit,
 }: LoginFormProps): JSX.Element => {
@@ -25,38 +27,44 @@ const LoginForm = ({
   );
 
   return (
-    <BaseAuthCard
-      title={'Entrar'}
-      isLoading={isLoading}
-      submitButtonText={'Logar'}
-      children2={registerLink}
-      onSubmitClick={() => onSubmit()}
-    >
-      <EmailInput
-        control={control}
-        disabled={isLoading}
-        fullWidth
-        label='Email'
-        name='email'
-        placeholder={'exemplo@gmail.com'}
-        rules={loginEmailRules}
-        sx={{ display: 'block', mb: 2 }}
-      />
+    <form onSubmit={(e) => e.preventDefault()}>
+      <BaseAuthCard
+        title={'Entrar'}
+        isLoading={isLoading}
+        submitButtonText={'Logar'}
+        children2={registerLink}
+        onSubmitClick={() => onSubmit()}
+      >
+        <EmailInput
+          control={control}
+          disabled={isLoading}
+          fullWidth
+          label='Email'
+          name='email'
+          placeholder={'exemplo@gmail.com'}
+          rules={loginEmailRules}
+          sx={{ display: 'block', mb: 2 }}
+        />
 
-      <PasswordInput
-        control={control}
-        disabled={isLoading}
-        fullWidth
-        label='Senha'
-        name='password'
-        rules={loginPasswordRules}
-        sx={{ mb: 2 }}
-      />
+        <PasswordInput
+          control={control}
+          disabled={isLoading}
+          fullWidth
+          label='Senha'
+          name='password'
+          rules={loginPasswordRules}
+          sx={{ mb: 2 }}
+        />
 
-      <Button sx={{ mb: 16 }} onClick={() => onRecoveryButtonClick()}>
-        Esqueci a senha
-      </Button>
-    </BaseAuthCard>
+        <Button sx={{ mb: 16 }} onClick={() => onRecoveryButtonClick()}>
+          Esqueci a senha
+        </Button>
+
+        <Typography variant='h6' sx={{ textAlign: 'center', color: 'error.main' }}>
+          {loginError}
+        </Typography>
+      </BaseAuthCard>
+    </form>
   );
 };
 

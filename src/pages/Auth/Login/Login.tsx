@@ -12,8 +12,12 @@ import {
 
 const Login = (): JSX.Element => {
   const [recoveryAccountDialogIsOpen, setRecoveryAccountDialogIsOpen] = useState<boolean>(false);
-  const { isLoading, handleLoginSubmit, loginFormControl } = useLogin();
-  const { handleRecoveryAccountSubmit, recoveryAccountFormControl } = useRecoveryAccount();
+  const { isLoading: loginIsLoading, loginError, handleLoginSubmit, loginFormControl } = useLogin();
+  const {
+    isLoading: recoveryAccountIsLoading,
+    handleRecoveryAccountSubmit,
+    recoveryAccountFormControl,
+  } = useRecoveryAccount();
 
   const handleRecoveryButtonClick = () => {
     setRecoveryAccountDialogIsOpen(true);
@@ -32,7 +36,8 @@ const Login = (): JSX.Element => {
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <LoginForm
           control={loginFormControl}
-          isLoading={isLoading}
+          isLoading={loginIsLoading}
+          loginError={loginError}
           onRecoveryButtonClick={handleRecoveryButtonClick}
           onSubmit={handleLoginSubmit(onLoginSubmit)}
         />
@@ -40,7 +45,7 @@ const Login = (): JSX.Element => {
 
       <RecoveryAccountDialog
         control={recoveryAccountFormControl}
-        isLoading={isLoading}
+        isLoading={recoveryAccountIsLoading}
         isOpen={recoveryAccountDialogIsOpen}
         onClose={handleRecoveryAccountDialogClose}
         onSubmit={handleRecoveryAccountSubmit(onRecoveryAccountSubmit)}

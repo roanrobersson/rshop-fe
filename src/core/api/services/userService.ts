@@ -16,3 +16,17 @@ export const login = (userName: string, password: string): AxiosPromise => {
 
   return request({ url: '/oauth/token', data: payload, method: 'POST', headers });
 };
+
+export const recoveryAccount = (userName: string): AxiosPromise => {
+  const token = `${CLIENT_ID}:${CLIENT_SECRET}`;
+
+  const headers = {
+    Authorization: `Basic ${window.btoa(token)}`,
+    'Content-Type': 'application/x-www-form-urlencoded',
+  };
+
+  // payload username need to be in lowercase
+  const payload = qs.stringify({ username: userName });
+
+  return request({ url: '/mudar/esse/caminho/aqui', data: payload, method: 'POST', headers });
+};

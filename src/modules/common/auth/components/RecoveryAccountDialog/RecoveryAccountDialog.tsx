@@ -21,7 +21,7 @@ const RecoveryAccountDialog = ({
   control,
 }: RecoveryAccountDialogProps): JSX.Element => {
   return (
-    <>
+    <form onSubmit={(e) => e.preventDefault()}>
       <Dialog
         open={isOpen}
         onClose={onClose}
@@ -48,7 +48,7 @@ const RecoveryAccountDialog = ({
           />
         </BaseAuthCard>
       </Dialog>
-    </>
+    </form>
   );
 };
 

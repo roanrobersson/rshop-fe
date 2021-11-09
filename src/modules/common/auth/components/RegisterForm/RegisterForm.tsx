@@ -1,7 +1,6 @@
 import { PasswordInput, EmailInput } from 'core/components';
 import { useForm } from 'react-hook-form';
 import BaseAuthCard from 'modules/common/auth/components/BaseAuthCard';
-import useCurrentUser from 'modules/common/auth/hooks/useCurrentUser';
 import { emailRules, passwordRules } from 'core/lib/inputValidations';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,13 +30,14 @@ const RegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={(e) => e.preventDefault()}>
       <BaseAuthCard
         cancelButtonText={'Cancelar'}
         onCancelClick={handleCancelClick}
         isLoading={isLoading}
         submitButtonText={'Cadastrar'}
         title={'Cadastrar'}
+        onSubmitClick={() => handleSubmit(onSubmit)}
       >
         <EmailInput
           control={control}
