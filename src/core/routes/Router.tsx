@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import ClientMainNavbar from 'modules/client/MainNavbar';
-import AdminMainNavbar from 'modules/admin/MainNavbar';
+import ClientMainNavbar from 'modules/client/Header';
+import AdminMainNavbar from 'modules/admin/Header';
 import ClientFooter from 'modules/client/Footer';
-import AuthProvider from 'modules/auth/providers/AuthProvider';
+import CurrentUserProvider from 'modules/common/auth/providers/CurrentUserProvider';
 import RequireAuth from './RequireAuth';
 import {
   Client,
@@ -44,7 +44,7 @@ const Footer = (): JSX.Element => {
 const Router = (): JSX.Element => {
   return (
     <BrowserRouter>
-      <AuthProvider>
+      <CurrentUserProvider>
         <Navbar />
         <Routes>
           <Route path={'/'} element={<Client />}>
@@ -94,7 +94,7 @@ const Router = (): JSX.Element => {
           <Route path={'*'} element={<Navigate to={'404'} />} />
         </Routes>
         <Footer />
-      </AuthProvider>
+      </CurrentUserProvider>
     </BrowserRouter>
   );
 };

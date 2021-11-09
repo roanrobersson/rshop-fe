@@ -2,8 +2,8 @@ import { MouseEventHandler, MouseEvent } from 'react';
 import { Menu, MenuItem, Divider, Avatar, ListItemIcon } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import useAuth from 'modules/auth/hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useLogout from 'modules/common/auth/hooks/useLogout';
 
 type UserMenuProps = {
   anchorEl?: Element | ((element: Element) => Element) | null | undefined;
@@ -20,7 +20,7 @@ const UserMenu = ({
   onClick,
   onClose,
 }: UserMenuProps) => {
-  const { makeLogout } = useAuth();
+  const makeLogout = useLogout();
   const navigate = useNavigate();
   const location = useLocation();
 

@@ -6,16 +6,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import useIsMobile from 'core/hooks/useIsMobile';
-import MainNavbarLogo from './MainNavbarLogo';
+import HeaderLogo from './HeaderLogo';
 import { BadgeIconButton } from 'core/components';
 import { StyledLink, LinksWrapper, ButtonsWrapper } from './styled';
-import useAuth from 'modules/auth/hooks/useAuth';
+import useCurrentUser from 'modules/common/auth/hooks/useCurrentUser';
 import { useLocation, useNavigate } from 'react-router-dom';
-import UserMenu from '../user/UserMenu';
+import UserMenu from '../user/components/UserMenu';
 
-const MainNavbar = (): JSX.Element => {
+const Header = (): JSX.Element => {
   const isMobile = useIsMobile();
-  const { authenticated, currentUser } = useAuth();
+  const { authenticated, currentUser } = useCurrentUser();
   const navigate = useNavigate();
   const location = useLocation();
   const [userMenuAnchorEl, setUserMenuAnchorEl] = useState<HTMLElement | null>(null);
@@ -50,7 +50,7 @@ const MainNavbar = (): JSX.Element => {
               <StyledLink href='#' children='Maquiagem' />
             </LinksWrapper>
 
-            <MainNavbarLogo href={'/'} isMobile={isMobile} />
+            <HeaderLogo href={'/'} isMobile={isMobile} />
 
             <ButtonsWrapper>
               <IconButton
@@ -112,4 +112,4 @@ const MainNavbar = (): JSX.Element => {
   );
 };
 
-export default MainNavbar;
+export default Header;

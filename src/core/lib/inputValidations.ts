@@ -15,3 +15,17 @@ export const loginEmailRules: InputValidationRules = {
     message: requiredMessage,
   },
 };
+
+export const passwordRules: InputValidationRules = {
+  required: {
+    value: true,
+    message: requiredMessage,
+  },
+};
+
+export const emailRules: InputValidationRules = {
+  required: {
+    value: true,
+    message: requiredMessage,
+  },
+};

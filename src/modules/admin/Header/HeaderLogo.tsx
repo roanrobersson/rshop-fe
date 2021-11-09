@@ -1,13 +1,13 @@
 import logoMobile from 'core/assets/images/logo_white_mobile.webp';
 import { ImageLink } from 'core/components';
 
-type MainNavbarLogoProps = {
+type HeaderLogoProps = {
   href: string;
   isMobile: boolean;
 };
 
-const MainNavbarLogo = ({ href, isMobile }: MainNavbarLogoProps): JSX.Element => (
+const HeaderLogo = ({ href, isMobile }: HeaderLogoProps): JSX.Element => (
   <ImageLink href={href} src={logoMobile} alt='logo' width={177} height={28} />
 );
 
-export default MainNavbarLogo;
+export default HeaderLogo;

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Role } from 'core/lib/types';
-import useAuth from 'modules/auth/hooks/useAuth';
+import useCurrentUser from 'modules/common/auth/hooks/useCurrentUser';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 type PrivateProps = {
@@ -10,7 +10,7 @@ type PrivateProps = {
 
 const RequireAuth = ({ allowedRoles = [], children }: PrivateProps): JSX.Element => {
   const navigate = useNavigate();
-  const { authenticated, isAllowedByRoles } = useAuth();
+  const { authenticated, isAllowedByRoles } = useCurrentUser();
   const location = useLocation();
 
   useEffect(() => {
