@@ -56,7 +56,7 @@ export const isRefreshTokenValid = (): boolean => {
 };
 
 export const isAuthenticated = (): boolean => {
-  return isAccessTokenValid();
+  return isRefreshTokenValid();
 };
 
 export const isAllowedByRoles = (roles: Role[] = []): boolean => {

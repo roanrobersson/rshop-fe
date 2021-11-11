@@ -1,50 +1,40 @@
 import { PasswordInput, EmailInput } from 'core/components';
-import { useForm } from 'react-hook-form';
+import { Control } from 'react-hook-form';
 import BaseAuthCard from 'modules/common/auth/components/BaseAuthCard';
 import { emailRules, passwordRules } from 'core/lib/inputValidations';
-import { useNavigate } from 'react-router-dom';
+import { RegisterFormData } from 'modules/common/auth/types';
 
-type FormData = {
-  name: string;
-  lastName: string;
-  email: string;
-  password: string;
+type RegisterFormProps = {
+  control: Control<RegisterFormData>;
+  isLoading: boolean;
+  onSubmit: () => void;
+  onCancelClick: () => void;
+  registerError: string | null;
 };
 
-const RegisterForm = () => {
-  const isLoading = false; /////////////////////////////////////
-  const navigate = useNavigate();
-
-  const defaultFormValues: FormData = { name: '', lastName: '', email: '', password: '' };
-  const { handleSubmit, control } = useForm<FormData>({
-    defaultValues: defaultFormValues,
-    mode: 'onChange',
-  });
-
-  const onSubmit = (data: FormData) => {
-    navigate('/entrar');
-  };
-
-  const handleCancelClick = () => {
-    navigate('/entrar');
-  };
-
+const RegisterForm = ({
+  control,
+  isLoading,
+  registerError,
+  onSubmit,
+  onCancelClick,
+}: RegisterFormProps) => {
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       <BaseAuthCard
         cancelButtonText={'Cancelar'}
-        onCancelClick={handleCancelClick}
         isLoading={isLoading}
         submitButtonText={'Cadastrar'}
         title={'Cadastrar'}
-        onSubmitClick={() => handleSubmit(onSubmit)}
+        onSubmitClick={() => onSubmit()}
+        onCancelClick={onCancelClick}
       >
         <EmailInput
           control={control}
           disabled={isLoading}
           fullWidth
           label='Nome'
-          name='name'
+          name='firstName'
           rules={emailRules}
           sx={{ display: 'block', mb: 2 }}
         />
