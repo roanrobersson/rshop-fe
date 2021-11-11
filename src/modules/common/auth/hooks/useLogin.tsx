@@ -11,20 +11,20 @@ import {
 } from 'modules/common/auth/providers/CurrentUserProvider';
 
 type useLoginReturn = {
+  error: string | null;
+  formControl: Control<LoginFormData>;
+  handleSubmit: UseFormHandleSubmit<LoginFormData>;
   isLoading: boolean;
-  handleLoginSubmit: UseFormHandleSubmit<LoginFormData>;
-  loginFormControl: Control<LoginFormData>;
-  loginError: string | null;
 };
 
 const useLogin = (): useLoginReturn => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [loginError, setLoginError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const context = useContext(CurrentUserContext);
   const location = useLocation();
   const navigate = useNavigate();
   const { isAllowedByRoles } = useCurrentUser();
-  const { handleSubmit: handleLoginSubmit, control: loginFormControl } = useForm<LoginFormData>({
+  const { handleSubmit, control: formControl } = useForm<LoginFormData>({
     defaultValues: { email: '', password: '' },
     mode: 'onChange',
   });
@@ -35,16 +35,21 @@ const useLogin = (): useLoginReturn => {
     if (isAllowedByRoles(['ROLE_OPERATOR']) || isAllowedByRoles(['ROLE_ADMIN'])) {
       return '/admin';
     }
-    if (previousPath === undefined || previousPath === '/entrar' || previousPath === '/cadastrar') {
+    if (
+      previousPath === undefined ||
+      previousPath === '/entrar' ||
+      previousPath === '/cadastrar' ||
+      previousPath === '/404'
+    ) {
       return '/';
     }
     return previousPath;
   };
 
-  const onLoginSubmit = (data: LoginFormData): void => {
+  const onSubmit = (data: LoginFormData): void => {
     setIsLoading(true);
 
-    login(data.email, data.password)
+    login(data)
       .then((response) => {
         try {
           saveSessionData(response.data);
@@ -57,9 +62,9 @@ const useLogin = (): useLoginReturn => {
       .catch((error) => {
         const errorStatus = error?.response?.status;
         if (errorStatus && errorStatus === 400) {
-          setLoginError('Email ou senha inválidos');
+          setError('Email ou senha inválidos');
         } else {
-          setLoginError('Falha na comunicação com o servidor');
+          setError('Falha na comunicação com o servidor');
         }
       })
       .then(() => setIsLoading(false));
@@ -67,9 +72,9 @@ const useLogin = (): useLoginReturn => {
 
   return {
     isLoading,
-    loginError,
-    handleLoginSubmit: () => handleLoginSubmit(onLoginSubmit),
-    loginFormControl,
+    error,
+    handleSubmit: () => handleSubmit(onSubmit),
+    formControl,
   };
 };
 

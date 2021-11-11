@@ -1,8 +1,14 @@
-import { useState, useEffect, Dispatch, SetStateAction } from 'react';
-import { createContext } from 'react';
-import { getAllowedRoles, getSessionData, isAuthenticated, isAllowedByRoles } from 'core/api/auth';
+import { useState, useEffect, Dispatch, SetStateAction, createContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import { CurrentUser } from 'modules/common/auth/types';
 import { Role } from 'core/lib/types';
+import {
+  getAllowedRoles,
+  getSessionData,
+  isAuthenticated,
+  isAllowedByRoles,
+  isRefreshTokenValid,
+} from 'core/api/auth';
 
 type CurrentUserContextData = {
   authenticated: boolean;
@@ -32,6 +38,13 @@ const CurrentUserProvider = ({ children }: CurrentUserProviderProps): JSX.Elemen
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(
     extractAndNormalizeCurrentUser(getSessionData())
   );
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!isRefreshTokenValid()) {
+      setCurrentUser(null);
+    }
+  }, [location]);
 
   useEffect(() => {
     if (currentUser) {

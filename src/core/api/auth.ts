@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode';
-import { SessionData, AccessToken } from './types';
+import { SessionData, AccessToken, RefreshToken } from './types';
 import { Role } from 'core/lib/types';
 
 export const saveSessionData = (sessionData: SessionData): void => {
@@ -26,6 +26,16 @@ export const getAccessTokenDecoded = (): AccessToken | null => {
   }
 };
 
+export const getRefreshTokenDecoded = (): AccessToken | null => {
+  const sessionData: SessionData | null = getSessionData();
+  if (sessionData === null) return null;
+  try {
+    return jwtDecode(sessionData.refresh_token);
+  } catch (error) {
+    return null;
+  }
+};
+
 export const getAllowedRoles = (): Role[] => {
   const accessTokenDecoded: AccessToken | null = getAccessTokenDecoded();
   if (accessTokenDecoded === null) return [];
@@ -33,14 +43,20 @@ export const getAllowedRoles = (): Role[] => {
   return authorities;
 };
 
-export const isTokenValid = (): boolean => {
+export const isAccessTokenValid = (): boolean => {
   const accessTokenDecoded: AccessToken | null = getAccessTokenDecoded();
   if (accessTokenDecoded === null) return false;
   return Date.now() <= accessTokenDecoded.exp * 1000;
 };
 
+export const isRefreshTokenValid = (): boolean => {
+  const refreshTokenDecoded: RefreshToken | null = getRefreshTokenDecoded();
+  if (refreshTokenDecoded === null) return false;
+  return Date.now() <= refreshTokenDecoded.exp * 1000;
+};
+
 export const isAuthenticated = (): boolean => {
-  return isTokenValid();
+  return isAccessTokenValid();
 };
 
 export const isAllowedByRoles = (roles: Role[] = []): boolean => {

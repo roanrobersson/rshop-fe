@@ -12,7 +12,12 @@ import {
 
 const Login = (): JSX.Element => {
   const [recoveryAccountDialogIsOpen, setRecoveryAccountDialogIsOpen] = useState<boolean>(false);
-  const { isLoading: loginIsLoading, loginError, handleLoginSubmit, loginFormControl } = useLogin();
+  const {
+    isLoading: loginIsLoading,
+    error: loginError,
+    handleSubmit: handleLoginSubmit,
+    formControl: loginFormControl,
+  } = useLogin();
   const {
     isLoading: recoveryAccountIsLoading,
     handleRecoveryAccountSubmit,
