@@ -4,6 +4,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useLogout from 'modules/common/auth/hooks/useLogout';
+import { CLIENT_ACCOUNT } from 'core/configs/routeKeys';
 
 type UserMenuProps = {
   anchorEl?: Element | ((element: Element) => Element) | null | undefined;
@@ -67,7 +68,7 @@ const UserMenu = ({
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={() => navigate('conta', { state: { from: location } })}>
+        <MenuItem onClick={() => navigate(CLIENT_ACCOUNT, { state: { from: location } })}>
           <Avatar /> Minha conta
         </MenuItem>
 

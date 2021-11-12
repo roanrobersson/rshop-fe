@@ -12,6 +12,7 @@ import { StyledLink, LinksWrapper, ButtonsWrapper } from './styled';
 import useCurrentUser from 'modules/common/auth/hooks/useCurrentUser';
 import { useLocation, useNavigate } from 'react-router-dom';
 import UserMenu from '../user/components/UserMenu';
+import { AUTH_LOGIN } from 'core/configs/routeKeys';
 
 const Header = (): JSX.Element => {
   const isMobile = useIsMobile();
@@ -22,7 +23,7 @@ const Header = (): JSX.Element => {
   const [userMenuIsOpen, setUserMenuIsOpen] = useState<boolean>(false);
 
   const handleLoginClick = (ev: MouseEvent<HTMLElement>) => {
-    navigate('/entrar', { state: { from: location } });
+    navigate(AUTH_LOGIN, { state: { from: location } });
   };
 
   const handleAccountClick = (ev: MouseEvent<HTMLElement>) => {

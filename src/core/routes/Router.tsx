@@ -4,6 +4,8 @@ import AdminMainNavbar from 'modules/admin/Header';
 import ClientFooter from 'modules/client/Footer';
 import CurrentUserProvider from 'modules/common/auth/providers/CurrentUserProvider';
 import RequireAuth from './RequireAuth';
+import Unauthorized from 'pages/Unauthorized';
+import routeKeys from 'core/configs/routeKeys';
 import {
   Client,
   Admin,
@@ -21,12 +23,11 @@ import {
   Login,
   Auth,
 } from 'pages';
-import Unauthorized from 'pages/Unauthorized';
 
 const Navbar = (): JSX.Element => {
   return (
     <Routes>
-      <Route path={'admin/*'} element={<AdminMainNavbar />} />
+      <Route path={`${routeKeys.ADMIN_ROOT}/*`} element={<AdminMainNavbar />} />
       <Route path={'*'} element={<ClientMainNavbar />} />
     </Routes>
   );
@@ -35,7 +36,7 @@ const Navbar = (): JSX.Element => {
 const Footer = (): JSX.Element => {
   return (
     <Routes>
-      <Route path={'admin/*'} element={null} />
+      <Route path={`${routeKeys.ADMIN_ROOT}/*`} element={null} />
       <Route path={'*'} element={<ClientFooter />} />
     </Routes>
   );
@@ -47,13 +48,13 @@ const Router = (): JSX.Element => {
       <CurrentUserProvider>
         <Navbar />
         <Routes>
-          <Route path={'/'} element={<Client />}>
-            <Route path={'/'} element={<ClientHome />} />
-            <Route path={'pesquisa'} element={<ClientSearch />} />
-            <Route path={'produtos'} element={<ClientProduct />} />
-            <Route path={'checkout'} element={<ClientCheckout />} />
+          <Route path={routeKeys.CLIENT_ROOT} element={<Client />}>
+            <Route path={routeKeys.CLIENT_HOME} element={<ClientHome />} />
+            <Route path={routeKeys.CLIENT_SEARCH} element={<ClientSearch />} />
+            <Route path={routeKeys.CLIENT_PRODUCTS} element={<ClientProduct />} />
+            <Route path={routeKeys.CLIENT_CHECKOUT} element={<ClientCheckout />} />
             <Route
-              path={'conta'}
+              path={routeKeys.CLIENT_ACCOUNT}
               element={
                 <RequireAuth allowedRoles={['ROLE_CLIENT']}>
                   <ClientAccount />
@@ -62,20 +63,23 @@ const Router = (): JSX.Element => {
             />
           </Route>
 
-          <Route path={'admin'} element={<Navigate to={'dashboard'} />} />
           <Route
-            path={'admin'}
+            path={routeKeys.ADMIN_ROOT}
+            element={<Navigate to={routeKeys.ADMIN_DASHBOARD} />}
+          />
+          <Route
+            path={routeKeys.ADMIN_ROOT}
             element={
               <RequireAuth allowedRoles={['ROLE_OPERATOR']}>
                 <Admin />
               </RequireAuth>
             }
           >
-            <Route path={'dashboard'} element={<AdminDashboard />} />
-            <Route path={'produtos'} element={<AdminProduct />} />
-            <Route path={'categorias'} element={<AdminCategory />} />
+            <Route path={routeKeys.ADMIN_DASHBOARD} element={<AdminDashboard />} />
+            <Route path={routeKeys.ADMIN_PRODUCTS} element={<AdminProduct />} />
+            <Route path={routeKeys.ADMIN_CATEGORIES} element={<AdminCategory />} />
             <Route
-              path={'usuarios'}
+              path={routeKeys.ADMIN_USERS}
               element={
                 <RequireAuth allowedRoles={['ROLE_ADMIN']}>
                   <AdminUser />
@@ -84,14 +88,14 @@ const Router = (): JSX.Element => {
             />
           </Route>
 
-          <Route path={'/'} element={<Auth />}>
-            <Route path={'entrar'} element={<Login />} />
-            <Route path={'cadastrar'} element={<Register />} />
+          <Route path={routeKeys.AUTH_ROOT} element={<Auth />}>
+            <Route path={routeKeys.AUTH_LOGIN} element={<Login />} />
+            <Route path={routeKeys.AUTH_REGISTER} element={<Register />} />
           </Route>
 
-          <Route path={'nao-autorizado'} element={<Unauthorized />} />
-          <Route path={'404'} element={<NotFound />} />
-          <Route path={'*'} element={<Navigate to={'404'} />} />
+          <Route path={routeKeys.UNAUTHORIZED} element={<Unauthorized />} />
+          <Route path={routeKeys.NOT_FOUND} element={<NotFound />} />
+          <Route path={'*'} element={<Navigate to={routeKeys.NOT_FOUND} />} />
         </Routes>
         <Footer />
       </CurrentUserProvider>
