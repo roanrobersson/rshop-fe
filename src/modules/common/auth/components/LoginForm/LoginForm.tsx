@@ -4,6 +4,7 @@ import { Control } from 'react-hook-form';
 import BaseAuthCard from 'modules/common/auth/components/BaseAuthCard';
 import { loginEmailRules, loginPasswordRules } from 'core/lib/inputValidations';
 import { LoginFormData } from 'modules/common/auth/types';
+import { AUTH_REGISTER } from 'core/configs/routeKeys';
 
 type LoginFormProps = {
   control: Control<LoginFormData>;
@@ -22,7 +23,7 @@ const LoginForm = ({
 }: LoginFormProps): JSX.Element => {
   const registerLink = (
     <Typography variant='body1' sx={{ textAlign: 'center' }}>
-      Não tem cadastro? <Link href='/cadastrar'>CADASTRAR</Link>
+      Não tem cadastro? <Link href={AUTH_REGISTER}>CADASTRAR</Link>
     </Typography>
   );
 

@@ -12,7 +12,7 @@ import { StyledLink, LinksWrapper, ButtonsWrapper } from './styled';
 import useCurrentUser from 'modules/common/auth/hooks/useCurrentUser';
 import { useLocation, useNavigate } from 'react-router-dom';
 import UserMenu from '../user/components/UserMenu';
-import { AUTH_LOGIN } from 'core/configs/routeKeys';
+import { AUTH_LOGIN, CLIENT_ROOT } from 'core/configs/routeKeys';
 
 const Header = (): JSX.Element => {
   const isMobile = useIsMobile();
@@ -51,7 +51,7 @@ const Header = (): JSX.Element => {
               <StyledLink href='#' children='Maquiagem' />
             </LinksWrapper>
 
-            <HeaderLogo href={'/'} isMobile={isMobile} />
+            <HeaderLogo href={CLIENT_ROOT} isMobile={isMobile} />
 
             <ButtonsWrapper>
               <IconButton

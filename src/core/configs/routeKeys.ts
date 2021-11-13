@@ -13,7 +13,7 @@ export const ADMIN_USERS = `${ADMIN_ROOT}/usuarios`;
 
 export const AUTH_ROOT = `/`;
 export const AUTH_LOGIN = `${AUTH_ROOT}entrar`;
-export const AUTH_REGISTER = `${AUTH_ROOT}registrar`;
+export const AUTH_REGISTER = `${AUTH_ROOT}cadastrar`;
 
 export const UNAUTHORIZED = '/nao-autorizado';
 export const NOT_FOUND = `/404`;

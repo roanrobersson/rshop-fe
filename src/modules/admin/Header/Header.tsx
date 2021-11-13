@@ -3,6 +3,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import useIsMobile from 'core/hooks/useIsMobile';
 import HeaderLogo from './HeaderLogo';
 import useCurrentUser from 'modules/common/auth/hooks/useCurrentUser';
+import { ADMIN_ROOT } from 'core/configs/routeKeys';
 
 const Header = (): JSX.Element => {
   const isMobile = useIsMobile();
@@ -14,7 +15,7 @@ const Header = (): JSX.Element => {
         <Toolbar
           sx={{ minHeight: { md: 120 }, px: { md: 1, lg: 8 }, justifyContent: 'space-between' }}
         >
-          <HeaderLogo href={'/admin'} isMobile={isMobile} />
+          <HeaderLogo href={ADMIN_ROOT} isMobile={isMobile} />
 
           {authenticated ? (
             <Button size='large' onClick={() => {}} color='inherit'>
