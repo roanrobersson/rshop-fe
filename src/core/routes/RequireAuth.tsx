@@ -22,7 +22,7 @@ const RequireAuth = ({ allowedRoles = [], children }: PrivateProps): JSX.Element
     }
   }, [authenticated, allowedRoles, navigate, isAllowedByRoles, location]);
 
-  return children;
+  return authenticated ? children : <></>;
 };
 
 export default RequireAuth;

@@ -1,6 +1,12 @@
 import { AxiosRequestConfig } from 'axios';
 import { Role } from 'core/lib/types';
 
+declare global {
+  interface Window {
+    dirtLogout: boolean;
+  }
+}
+
 export type LoginData = {
   username: string;
   password: string;
@@ -36,5 +42,6 @@ export type SimpleCurrentUser = {
 };
 
 export type AxiosRequestConfigCustom = AxiosRequestConfig & {
-  __retry?: boolean;
+  __isRetry?: boolean;
+  __isTryRefreshToken?: boolean;
 };

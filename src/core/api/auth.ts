@@ -3,6 +3,7 @@ import { SessionData, AccessToken, RefreshToken } from './types';
 import { Role } from 'core/lib/types';
 
 export const saveSessionData = (sessionData: SessionData): void => {
+  clearSessionData();
   localStorage.setItem('authData', JSON.stringify(sessionData));
 };
 
@@ -14,6 +15,10 @@ export const getSessionData = (): SessionData | null => {
   } catch (error) {
     return null;
   }
+};
+
+export const clearSessionData = (): void => {
+  localStorage.removeItem('authData');
 };
 
 export const getAccessTokenDecoded = (): AccessToken | null => {

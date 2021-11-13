@@ -8,6 +8,7 @@ import {
   isAuthenticated,
   isAllowedByRoles,
   isRefreshTokenValid,
+  clearSessionData,
 } from 'core/api/auth';
 
 type CurrentUserContextData = {
@@ -41,7 +42,22 @@ const CurrentUserProvider = ({ children }: CurrentUserProviderProps): JSX.Elemen
   const location = useLocation();
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      if (window.dirtLogout) {
+        window.dirtLogout = false;
+        clearSessionData();
+        setCurrentUser(null);
+      }
+    }, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [location]);
+
+  useEffect(() => {
     if (!isRefreshTokenValid()) {
+      clearSessionData();
       setCurrentUser(null);
     }
   }, [location]);
