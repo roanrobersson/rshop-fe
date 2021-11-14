@@ -1,18 +1,20 @@
-export { default as Client } from 'pages/Client';
-export { default as ClientHome } from 'pages/Client/Home';
-export { default as ClientSearch } from 'pages/Client/Search';
-export { default as ClientProduct } from 'pages/Client/Product';
-export { default as ClientCheckout } from 'pages/Client/Checkout';
-export { default as ClientAccount } from 'pages/Client/Account';
+import { lazy } from 'react';
 
-export { default as Admin } from 'pages/Admin';
-export { default as AdminDashboard } from 'pages/Admin/Dashboard';
-export { default as AdminProduct } from 'pages/Admin/Product';
-export { default as AdminCategory } from 'pages/Admin/Category';
-export { default as AdminUser } from 'pages/Admin/User';
+export const Client = lazy(() => import('pages/Client'));
+export const ClientHome = lazy(() => import('pages/Client/Home'));
+export const ClientSearch = lazy(() => import('pages/Client/Search'));
+export const ClientProduct = lazy(() => import('pages/Client/Product'));
+export const ClientAccount = lazy(() => import('pages/Client/Account'));
+export const ClientCheckout = lazy(() => import('pages/Client/Checkout'));
 
-export { default as Auth } from 'pages/Auth';
-export { default as Login } from 'pages/Auth/Login';
-export { default as Register } from 'pages/Auth/Register';
+export const Admin = lazy(() => import('pages/Admin'));
+export const AdminDashboard = lazy(() => import('pages/Admin//Dashboard'));
+export const AdminProduct = lazy(() => import('pages/Admin/Product'));
+export const AdminCategory = lazy(() => import('pages/Admin/Category'));
+export const AdminUser = lazy(() => import('pages/Admin/User'));
 
-export { default as NotFound } from 'pages/NotFound';
+export const Auth = lazy(() => import('pages/Auth'));
+export const Login = lazy(() => import('pages/Auth/Login'));
+export const Register = lazy(() => import('pages/Auth/Register'));
+
+export const NotFound = lazy(() => import('pages/NotFound'));
