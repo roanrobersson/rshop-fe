@@ -40,6 +40,7 @@ const useRegister = (): useRegisterReturn => {
       passwordConfirmation: '',
     },
     mode: 'onChange',
+    criteriaMode: 'all',
     resolver: joiResolver(registerValidationSchema),
   });
 
