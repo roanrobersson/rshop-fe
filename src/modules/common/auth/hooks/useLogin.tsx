@@ -9,6 +9,8 @@ import {
   CurrentUserContext,
   extractAndNormalizeCurrentUser,
 } from 'modules/common/auth/providers/CurrentUserProvider';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { loginValidationSchema } from 'modules/common/auth/lib/validationSchemas';
 
 type useLoginReturn = {
   error: string | null;
@@ -25,8 +27,9 @@ const useLogin = (): useLoginReturn => {
   const navigate = useNavigate();
   const { isAllowedByRoles } = useCurrentUser();
   const { handleSubmit, control: formControl } = useForm<LoginFormData>({
-    defaultValues: { email: '', password: '' },
+    defaultValues: { loginEmail: '', loginPassword: '' },
     mode: 'onChange',
+    resolver: joiResolver(loginValidationSchema),
   });
 
   // TODO : Refactor to cover all auth routes in previousPath

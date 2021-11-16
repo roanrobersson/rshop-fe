@@ -2,16 +2,15 @@ import { TextField, TextFieldProps } from '@mui/material';
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form';
 import { SPACE_CHAR } from 'core/lib/constants';
 import { SyntheticEvent } from 'react';
-import { InputValidationRules } from 'core/lib/types';
 
-type EmailInputProps<T> = Omit<UseControllerProps<T>, 'rules'> &
+type TextInputProps<T> = Omit<UseControllerProps<T>, 'rules'> &
   Omit<TextFieldProps, 'onChange' | 'onBlur'> & {
     onChange?: (e: SyntheticEvent) => void;
     onBlur?: (e: SyntheticEvent) => void;
-    rules: InputValidationRules;
+    maxLength?: number;
   };
 
-const EmailInput = <T extends FieldValues>({
+const TextInput = <T extends FieldValues>({
   control,
   helperText = SPACE_CHAR,
   label,
@@ -19,16 +18,16 @@ const EmailInput = <T extends FieldValues>({
   defaultValue,
   onChange,
   onBlur,
-  rules,
+  maxLength = 127,
   ...props
-}: EmailInputProps<T>): JSX.Element => {
+}: TextInputProps<T>): JSX.Element => {
   const {
     field: { ref, ...inputProps },
     fieldState: { invalid, error },
   } = useController({
     name,
     control,
-    rules: { ...rules, onChange, onBlur },
+    rules: { onChange, onBlur },
     defaultValue,
   });
 
@@ -41,10 +40,11 @@ const EmailInput = <T extends FieldValues>({
       label={label}
       variant='outlined'
       sx={{ display: 'block', mb: 4 }}
+      inputProps={{ maxLength: maxLength }}
       {...inputProps}
       {...props}
     />
   );
 };
 
-export default EmailInput;
+export default TextInput;

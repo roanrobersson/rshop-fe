@@ -1,7 +1,6 @@
 import BaseAuthCard from 'modules/common/auth/components/BaseAuthCard';
-import { emailRules } from 'core/lib/inputValidations';
 import { Control } from 'react-hook-form';
-import { EmailInput } from 'core/components';
+import { TextInput } from 'core/components';
 import { DialogOnCloseFunction, RecoveryAccountFormData } from 'modules/common/auth/types';
 import { Typography, Dialog } from '@mui/material';
 
@@ -36,14 +35,14 @@ const RecoveryAccountDialog = ({
         >
           <Typography sx={{ mb: 4 }}>Informe seu email de cadastro</Typography>
 
-          <EmailInput
+          <TextInput
             control={control}
             disabled={isLoading}
             fullWidth
             label='Email'
-            name='email'
+            maxLength={50}
+            name='loginEmail'
             placeholder={'exemplo@gmail.com'}
-            rules={emailRules}
             sx={{ display: 'block', mb: 2 }}
           />
         </BaseAuthCard>

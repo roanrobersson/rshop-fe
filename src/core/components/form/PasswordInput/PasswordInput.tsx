@@ -1,7 +1,6 @@
 import { useState, SyntheticEvent } from 'react';
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form';
 import { SPACE_CHAR } from 'core/lib/constants';
-import { InputValidationRules } from 'core/lib/types';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   IconButton,
@@ -19,7 +18,7 @@ type PasswordInputProps<T> = Omit<UseControllerProps<T>, 'rules'> &
     label: string;
     onChange?: (e: SyntheticEvent) => void;
     onBlur?: (e: SyntheticEvent) => void;
-    rules: InputValidationRules;
+    maxLength?: number;
   };
 
 const PasswordInput = <T extends FieldValues>({
@@ -30,7 +29,7 @@ const PasswordInput = <T extends FieldValues>({
   defaultValue,
   onChange,
   onBlur,
-  rules,
+  maxLength = 50,
   ...props
 }: PasswordInputProps<T>): JSX.Element => {
   const {
@@ -39,7 +38,7 @@ const PasswordInput = <T extends FieldValues>({
   } = useController({
     name,
     control,
-    rules: { ...rules, onChange, onBlur },
+    rules: { onChange, onBlur },
     defaultValue,
   });
   const [visible, setVisible] = useState<boolean>(false);
@@ -63,6 +62,7 @@ const PasswordInput = <T extends FieldValues>({
             </IconButton>
           </InputAdornment>
         }
+        inputProps={{ maxLength: maxLength }}
         {...inputProps}
       />
       <FormHelperText id='outlined-adornment-password-text'>

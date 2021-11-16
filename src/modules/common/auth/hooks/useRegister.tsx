@@ -1,14 +1,21 @@
 import { useContext, useState } from 'react';
-import { RegisterFormData } from 'modules/common/auth/types';
+import { RegisterFormData, RegisterFormDataToSubmit } from 'modules/common/auth/types';
 import { Control, useForm, UseFormHandleSubmit } from 'react-hook-form';
 import { register } from 'core/api/services/userService';
 import { saveSessionData } from 'core/api/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useCurrentUser from './useCurrentUser';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { registerValidationSchema } from 'modules/common/auth/lib/validationSchemas';
 import {
   CurrentUserContext,
   extractAndNormalizeCurrentUser,
 } from 'modules/common/auth/providers/CurrentUserProvider';
+
+const normalizeFormData = (data: RegisterFormData): RegisterFormDataToSubmit => {
+  const { passwordConfirmation, ...normalizedData } = data;
+  return normalizedData;
+};
 
 type useRegisterReturn = {
   error: string | null;
@@ -25,8 +32,15 @@ const useRegister = (): useRegisterReturn => {
   const navigate = useNavigate();
   const { isAllowedByRoles } = useCurrentUser();
   const { handleSubmit, control: formControl } = useForm<RegisterFormData>({
-    defaultValues: { email: '', password: '' },
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      passwordConfirmation: '',
+    },
     mode: 'onChange',
+    resolver: joiResolver(registerValidationSchema),
   });
 
   // TODO : Refactor to cover all auth routes in previousPath
@@ -49,7 +63,7 @@ const useRegister = (): useRegisterReturn => {
   const onSubmit = (data: RegisterFormData): void => {
     setIsLoading(true);
 
-    register(data)
+    register(normalizeFormData(data))
       .then((response) => {
         try {
           saveSessionData(response.data);

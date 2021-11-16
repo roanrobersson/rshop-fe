@@ -7,6 +7,7 @@ import CurrentUserProvider from 'modules/common/auth/providers/CurrentUserProvid
 import RequireAuth from './RequireAuth';
 import Unauthorized from 'pages/Unauthorized';
 import routeKeys from 'core/configs/routeKeys';
+import Loading from 'core/components/Loading';
 import {
   Client,
   Admin,
@@ -24,7 +25,6 @@ import {
   Login,
   Auth,
 } from 'pages';
-import Loading from 'core/components/Loading';
 
 const Navbar = (): JSX.Element => {
   return (

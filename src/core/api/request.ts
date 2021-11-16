@@ -7,25 +7,34 @@ import { AxiosRequestConfigCustom } from './types';
 
 const apiToken = `${CLIENT_ID}:${CLIENT_SECRET}`;
 
-const headers = {
-  Authorization: `Basic ${window.btoa(apiToken)}`,
-  'Content-Type': 'application/x-www-form-urlencoded',
-};
+export const request = (config: AxiosRequestConfigCustom): AxiosPromise => {
+  const headers = {
+    Authorization: `Basic ${window.btoa(apiToken)}`,
+    'Content-Type': 'application/json;charset=UTF-8',
+  };
 
-const makePrivateRequestHeaders = () => ({
-  Authorization: `Bearer ${getSessionData()?.access_token}`,
-});
-
-export const request = (params: AxiosRequestConfigCustom): AxiosPromise => {
   return axios({
     headers,
     baseURL: API_URL,
-    ...params,
+    ...config,
   });
 };
 
-export const makePrivateRequest = (params: AxiosRequestConfigCustom): AxiosPromise => {
-  return request({ ...params, headers: makePrivateRequestHeaders() });
+export const privateRequest = (config: AxiosRequestConfigCustom): AxiosPromise => {
+  const headers = {
+    Authorization: `Bearer ${getSessionData()?.access_token}`,
+  };
+
+  return request({ ...config, headers });
+};
+
+export const loginRequest = (config: AxiosRequestConfigCustom): AxiosPromise => {
+  const headers = {
+    Authorization: `Basic ${window.btoa(apiToken)}`,
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+  };
+
+  return request({ ...config, headers });
 };
 
 export const refreshAccessToken = () => {
@@ -65,7 +74,7 @@ axios.interceptors.response.use(
         const response = await refreshAccessToken();
         saveSessionData(response.data);
         console.warn('Access token refreshed');
-        return makePrivateRequest(originalRequest);
+        return privateRequest(originalRequest);
       } catch (_error) {
         window.dirtLogout = true;
         console.error('Access token expirated');

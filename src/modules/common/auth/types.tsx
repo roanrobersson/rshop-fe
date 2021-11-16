@@ -9,15 +9,23 @@ export type DialogOnCloseFunction =
   | undefined;
 
 export type RecoveryAccountFormData = {
-  email: string;
+  loginEmail: string;
 };
 
 export type LoginFormData = {
-  email: string;
-  password: string;
+  loginEmail: string;
+  loginPassword: string;
 };
 
 export type RegisterFormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+};
+
+export type RegisterFormDataToSubmit = {
   firstName: string;
   lastName: string;
   email: string;

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Control, useForm, UseFormHandleSubmit } from 'react-hook-form';
 import { RecoveryAccountFormData } from 'modules/common/auth/types';
 import { recoveryAccount } from 'core/api/services/userService';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { recoveryAccountValidationSchema } from 'modules/common/auth/lib/validationSchemas';
 
 type useRecoveryAccountReturn = {
   isLoading: boolean;
@@ -13,14 +15,15 @@ const useRecoveryAccount = (): useRecoveryAccountReturn => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { handleSubmit: handleRecoveryAccountSubmit, control: recoveryAccountFormControl } =
     useForm<RecoveryAccountFormData>({
-      defaultValues: { email: '' },
+      defaultValues: { loginEmail: '' },
       mode: 'onChange',
+      resolver: joiResolver(recoveryAccountValidationSchema),
     });
 
   const onRecoveryAccountSubmit = (data: RecoveryAccountFormData): void => {
     setIsLoading(true);
 
-    recoveryAccount(data.email)
+    recoveryAccount(data.loginEmail)
       .then((response) => {})
       .catch((error) => {
         console.log(error);

@@ -1,8 +1,7 @@
 import { Button, Typography } from '@mui/material';
-import { Link, PasswordInput, EmailInput } from 'core/components';
+import { Link, PasswordInput, TextInput } from 'core/components';
 import { Control } from 'react-hook-form';
 import BaseAuthCard from 'modules/common/auth/components/BaseAuthCard';
-import { loginEmailRules, loginPasswordRules } from 'core/lib/inputValidations';
 import { LoginFormData } from 'modules/common/auth/types';
 import { AUTH_REGISTER } from 'core/configs/routeKeys';
 
@@ -36,14 +35,14 @@ const LoginForm = ({
         children2={registerLink}
         onSubmitClick={() => onSubmit()}
       >
-        <EmailInput
+        <TextInput
           control={control}
           disabled={isLoading}
           fullWidth
           label='Email'
-          name='email'
+          maxLength={50}
+          name='loginEmail'
           placeholder={'exemplo@gmail.com'}
-          rules={loginEmailRules}
           sx={{ display: 'block', mb: 2 }}
         />
 
@@ -52,8 +51,7 @@ const LoginForm = ({
           disabled={isLoading}
           fullWidth
           label='Senha'
-          name='password'
-          rules={loginPasswordRules}
+          name='loginPassword'
           sx={{ mb: 2 }}
         />
 

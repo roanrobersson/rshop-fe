@@ -4,4 +4,4 @@ export { default as ImageLink } from 'core/components/ImageLink';
 export { default as Link } from 'core/components/Link';
 
 export { default as PasswordInput } from 'core/components/form/PasswordInput';
-export { default as EmailInput } from 'core/components/form/EmailInput';
+export { default as TextInput } from 'core/components/form/TextInput';

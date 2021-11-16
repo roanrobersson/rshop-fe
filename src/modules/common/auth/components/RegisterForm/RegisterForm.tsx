@@ -1,7 +1,6 @@
-import { PasswordInput, EmailInput } from 'core/components';
+import { PasswordInput, TextInput } from 'core/components';
 import { Control } from 'react-hook-form';
 import BaseAuthCard from 'modules/common/auth/components/BaseAuthCard';
-import { emailRules, passwordRules } from 'core/lib/inputValidations';
 import { RegisterFormData } from 'modules/common/auth/types';
 
 type RegisterFormProps = {
@@ -29,34 +28,34 @@ const RegisterForm = ({
         onSubmitClick={() => onSubmit()}
         onCancelClick={onCancelClick}
       >
-        <EmailInput
+        <TextInput
           control={control}
           disabled={isLoading}
           fullWidth
           label='Nome'
+          maxLength={50}
           name='firstName'
-          rules={emailRules}
           sx={{ display: 'block', mb: 2 }}
         />
 
-        <EmailInput
+        <TextInput
           control={control}
           disabled={isLoading}
           fullWidth
           label='Sobrenome'
+          maxLength={50}
           name='lastName'
-          rules={emailRules}
           sx={{ display: 'block', mb: 2 }}
         />
 
-        <EmailInput
+        <TextInput
           control={control}
           disabled={isLoading}
           fullWidth
           label='Email'
+          maxLength={50}
           name='email'
           placeholder={'exemplo@gmail.com'}
-          rules={emailRules}
           sx={{ display: 'block', mb: 2 }}
         />
 
@@ -66,8 +65,6 @@ const RegisterForm = ({
           fullWidth
           label='Senha'
           name='password'
-          rules={passwordRules}
-          helperText='A sua senha deve contar pelo menos 8 caracteres e conter pelo menos um número'
           sx={{ mb: 2 }}
         />
 
@@ -76,8 +73,7 @@ const RegisterForm = ({
           disabled={isLoading}
           fullWidth
           label='Repita a senha'
-          name='password'
-          rules={passwordRules}
+          name='passwordConfirmation'
           sx={{ mb: 2 }}
         />
       </BaseAuthCard>
