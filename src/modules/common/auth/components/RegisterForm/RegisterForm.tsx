@@ -63,6 +63,7 @@ const RegisterForm = ({
           control={control}
           disabled={isLoading}
           fullWidth
+          hasPopper={true}
           label='Senha'
           name='password'
           sx={{ mb: 2 }}

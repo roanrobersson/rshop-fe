@@ -17,7 +17,7 @@ export const loginEmail = Joi.string()
     'any.required': requiredFieldMessage,
   });
 
-export const loginPassword = Joi.string().min(6).max(50).required().messages({
+export const loginPassword = Joi.string().min(8).max(50).required().messages({
   'string.min': 'A senha contém no mínimo {#limit} caracteres',
   'string.max': 'A senha contém no máximo {#limit} caracteres',
   'string.empty': requiredFieldMessage,
@@ -54,7 +54,7 @@ export const password = Joi.string()
   .custom(minUppercase(1))
   .custom(minLowercase(1))
   .custom(minSpecialCharacters(1))
-  .min(6)
+  .min(8)
   .max(50)
   .required()
   .messages({

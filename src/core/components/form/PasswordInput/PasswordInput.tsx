@@ -1,7 +1,8 @@
-import { useState, SyntheticEvent } from 'react';
+import { useState, SyntheticEvent, FocusEventHandler, useEffect } from 'react';
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form';
 import { SPACE_CHAR } from 'core/lib/constants';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import PasswordChecklistPopper, { PasswordChecklistItem } from './PasswordChecklistPopper';
 import {
   IconButton,
   OutlinedInput,
@@ -18,7 +19,9 @@ type PasswordInputProps<T> = Omit<UseControllerProps<T>, 'rules'> &
     label: string;
     onChange?: (e: SyntheticEvent) => void;
     onBlur?: (e: SyntheticEvent) => void;
+    onFocus?: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined;
     maxLength?: number;
+    hasPopper?: boolean;
   };
 
 const PasswordInput = <T extends FieldValues>({
@@ -30,26 +33,63 @@ const PasswordInput = <T extends FieldValues>({
   onChange,
   onBlur,
   maxLength = 50,
+  hasPopper = false,
   ...props
 }: PasswordInputProps<T>): JSX.Element => {
-  const {
-    field: { ref, ...inputProps },
-    fieldState: { invalid, error },
-  } = useController({
-    name,
-    control,
-    rules: { onChange, onBlur },
-    defaultValue,
-  });
+  const [anchorEl, setAnchorEl] = useState<(EventTarget & Element) | null>(null);
+  const isOpen = Boolean(anchorEl);
   const [visible, setVisible] = useState<boolean>(false);
+
+  const handleFocus = (e: SyntheticEvent): void => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleBlur = (e: SyntheticEvent): void => {
+    setAnchorEl(null);
+  };
 
   const handleVisibilityToggle = () => {
     setVisible(!visible);
   };
 
+  const {
+    field: { ref, value, ...inputProps },
+    fieldState: { invalid, error },
+  } = useController({
+    name,
+    control,
+    rules: { onChange, onBlur: handleBlur },
+    defaultValue,
+  });
+
+  const isFullfied = (type: string): boolean => {
+    return error?.types?.[type] || !value ? false : true;
+  };
+
+  const checklistItems: PasswordChecklistItem[] = [
+    {
+      text: 'No mínimo 8 caracteres',
+      fullfied: isFullfied('string.min'),
+    },
+    { text: 'No mínimo 1 número', fullfied: isFullfied('string.pattern.minDigits') },
+    {
+      text: 'No mínimo 1 letra maiúscula',
+      fullfied: isFullfied('string.pattern.minUppercase'),
+    },
+    {
+      text: 'No mínimo 1 letra minúscula',
+      fullfied: isFullfied('string.pattern.minLowercase'),
+    },
+    {
+      text: 'No mínimo 1 caractere especial',
+      fullfied: isFullfied('string.pattern.minSpecialCharacters'),
+    },
+  ];
+
   return (
     <FormControl error={invalid} variant='outlined' {...props}>
       <InputLabel htmlFor='outlined-adornment-password'>{label}</InputLabel>
+
       <OutlinedInput
         inputRef={ref}
         id='outlined-adornment-password'
@@ -62,12 +102,18 @@ const PasswordInput = <T extends FieldValues>({
             </IconButton>
           </InputAdornment>
         }
-        inputProps={{ maxLength: maxLength }}
+        inputProps={{ maxLength }}
+        onFocus={handleFocus}
         {...inputProps}
       />
+
       <FormHelperText id='outlined-adornment-password-text'>
-        {error?.message || helperText}
+        {(!hasPopper && error?.message) || helperText}
       </FormHelperText>
+
+      {hasPopper && (
+        <PasswordChecklistPopper isOpen={isOpen} anchorEl={anchorEl} items={checklistItems} />
+      )}
     </FormControl>
   );
 };
