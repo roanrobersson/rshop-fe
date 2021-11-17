@@ -1,4 +1,4 @@
-import { useState, SyntheticEvent, FocusEventHandler, useEffect } from 'react';
+import { useState, SyntheticEvent, FocusEventHandler } from 'react';
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form';
 import { SPACE_CHAR } from 'core/lib/constants';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -37,7 +37,7 @@ const PasswordInput = <T extends FieldValues>({
   ...props
 }: PasswordInputProps<T>): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<(EventTarget & Element) | null>(null);
-  const isOpen = Boolean(anchorEl);
+  const isOpen = hasPopper && Boolean(anchorEl);
   const [visible, setVisible] = useState<boolean>(false);
 
   const handleFocus = (e: SyntheticEvent): void => {
@@ -65,6 +65,8 @@ const PasswordInput = <T extends FieldValues>({
   const isFullfied = (type: string): boolean => {
     return error?.types?.[type] || !value ? false : true;
   };
+
+  const message = (!isOpen && error?.message) || helperText;
 
   const checklistItems: PasswordChecklistItem[] = [
     {
@@ -107,9 +109,7 @@ const PasswordInput = <T extends FieldValues>({
         {...inputProps}
       />
 
-      <FormHelperText id='outlined-adornment-password-text'>
-        {(!hasPopper && error?.message) || helperText}
-      </FormHelperText>
+      <FormHelperText id='outlined-adornment-password-text'>{message}</FormHelperText>
 
       {hasPopper && (
         <PasswordChecklistPopper isOpen={isOpen} anchorEl={anchorEl} items={checklistItems} />
