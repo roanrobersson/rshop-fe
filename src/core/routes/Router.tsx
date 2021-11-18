@@ -73,7 +73,7 @@ const Router = (): JSX.Element => {
             <Route
               path={routeKeys.ADMIN_ROOT}
               element={
-                <RequireAuth allowedRoles={['ROLE_OPERATOR']}>
+                <RequireAuth allowedRoles={['ROLE_OPERATOR', 'ROLE_ADMIN']}>
                   <Admin />
                 </RequireAuth>
               }
